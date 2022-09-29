@@ -32,8 +32,6 @@ async function processDBData() {
   return responses;
 }
 
-//console.table(await processDBData());
-
 async function* processDBDataGen() {
   const products = await myFakeDB();
 
@@ -53,6 +51,10 @@ async function* processDBDataGen() {
   }
 }
 
+// 1. run with common functions
+// console.table(await processDBData());
+
+// 2. run with generator functions
 for await (const data of processDBDataGen()) {
   console.table(data);
 }
