@@ -1,3 +1,4 @@
+// Mock a DB call and get 1000 product names
 const myFakeDB = async () =>
   Array.from(
     {
