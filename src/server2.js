@@ -1,7 +1,16 @@
-import { createServer } from "http";
+// curl -X POST "localhost:3001/cart" --data '{"id": "123"}'
+import { createServer } from "node:http";
+import { once } from "node:events";
 
 const PORT = 3001;
 async function handler(request, response) {
+  if (request.method === "POST" && request.url.includes("cart")) {
+    const data = await once(request, "data");
+    const item = JSON.parse(data);
+    console.log("received", item);
+
+    return response.end(`process suceeded for ${item.id}`);
+  }
   return response.end(`hey!`);
 }
 
