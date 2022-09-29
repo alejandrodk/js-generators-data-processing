@@ -1,5 +1,7 @@
-import { createServer } from "http";
-import { parse } from "url";
+// curl "localhost:3000/products?name=example"
+import { createServer } from "node:http";
+import { parse } from "node:url";
+import { randomUUID } from "node:crypto";
 
 const PORT = 3000;
 async function handler(request, response) {
@@ -7,6 +9,12 @@ async function handler(request, response) {
     const {
       query: { name },
     } = parse(request.url, true);
+
+    const item = {
+      product: name,
+      id: randomUUID(),
+    };
+    return response.end(JSON.stringify(item));
   }
   return response.end(`hey!`);
 }
