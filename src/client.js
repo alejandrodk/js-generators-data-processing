@@ -31,4 +31,27 @@ async function processDBData() {
   return responses;
 }
 
-console.table(await processDBData());
+//console.table(await processDBData());
+
+async function* processDBDataGen() {
+  const products = await myFakeDB();
+
+  for (const product of products) {
+    const productInfo = await (
+      await fetch(`${PRODUCTS_API}?name=${product}`)
+    ).text();
+
+    const cartInfo = await (
+      await fetch(`${CART_API}`, {
+        method: "POST",
+        body: productInfo,
+      })
+    ).text();
+
+    yield cartInfo;
+  }
+}
+
+for await (const data of processDBDataGen()) {
+  console.table(data);
+}
