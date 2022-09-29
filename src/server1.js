@@ -1,9 +1,12 @@
 import { createServer } from "http";
+import { parse } from "url";
 
 const PORT = 3000;
 async function handler(request, response) {
   if (request.method === "GET" && request.url.includes("products")) {
-    console.log("request", request.url);
+    const {
+      query: { name },
+    } = parse(request.url, true);
   }
   return response.end(`hey!`);
 }
